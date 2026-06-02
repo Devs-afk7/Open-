@@ -1,0 +1,494 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Nunito:wght@400;600;800&display=swap');
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --pink: #ff6b9d;
+  --pink-light: #ffb3cc;
+  --pink-pale: #fff0f5;
+  --rose: #e91e63;
+  --cream: #fff8f0;
+  --text-dark: #3d1a24;
+  --shadow: rgba(233, 30, 99, 0.25);
+  --gif-height: 230px;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #ffe4ef 0%, #ffd6e8 40%, #ffb3cc 100%);
+  font-family: 'Nunito', sans-serif;
+  overflow: hidden;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(255,182,193,0.4) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255,105,147,0.3) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(255,240,245,0.2) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ─── PETALS ─── */
+.petals-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.petal {
+  position: absolute;
+  top: -40px;
+  font-size: 1.4rem;
+  animation: fall linear infinite;
+  opacity: 0.7;
+  user-select: none;
+}
+
+@keyframes fall {
+  0%   { transform: translateY(-40px) rotate(0deg);   opacity: 0.8; }
+  100% { transform: translateY(110vh) rotate(360deg); opacity: 0;   }
+}
+
+/* ─── FLASH OVERLAY ─── */
+.flash-overlay {
+  position: fixed;
+  inset: 0;
+  background: white;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transition: opacity 0.15s ease;
+}
+
+.flash-overlay.flash-on {
+  animation: flashAnim 0.5s ease forwards;
+}
+
+@keyframes flashAnim {
+  0%   { opacity: 0; }
+  30%  { opacity: 0.85; }
+  100% { opacity: 0; }
+}
+
+/* ─── CONFETTI ─── */
+.confetti-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  overflow: hidden;
+  display: none;
+}
+
+.confetti-piece {
+  position: absolute;
+  top: -20px;
+  border-radius: 2px;
+  animation: confettiFall linear forwards;
+}
+
+@keyframes confettiFall {
+  0%   { transform: translateY(0)     rotate(0deg)   scale(1);   opacity: 1; }
+  80%  { opacity: 1; }
+  100% { transform: translateY(110vh) rotate(720deg) scale(0.4); opacity: 0; }
+}
+
+/* ─── HEART PARTICLES ─── */
+.heart-particle {
+  position: fixed;
+  pointer-events: none;
+  z-index: 200;
+  font-size: 1.6rem;
+  animation: heartBurst var(--dur, 1s) ease-out forwards;
+}
+
+@keyframes heartBurst {
+  0%   { transform: translate(0, 0) scale(1);                          opacity: 1; }
+  100% { transform: translate(var(--tx), var(--ty)) scale(0.2) rotate(var(--rot)); opacity: 0; }
+}
+
+/* ─── CARD ─── */
+.card {
+  position: relative;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 2px solid rgba(255, 150, 180, 0.4);
+  border-radius: 32px;
+  padding: 36px 44px 44px;
+  max-width: 480px;
+  width: 90vw;
+  text-align: center;
+  box-shadow:
+    0 20px 60px rgba(233, 30, 99, 0.15),
+    0 4px 20px rgba(255, 100, 150, 0.1),
+    inset 0 1px 0 rgba(255,255,255,0.8);
+  animation: cardIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes cardIn {
+  from { transform: scale(0.7) translateY(30px); opacity: 0; }
+  to   { transform: scale(1)   translateY(0);    opacity: 1; }
+}
+
+/* ─── SHAKE LEVELS (data-shake on card) ─── */
+.card[data-shake="1"] { animation: shake1 0.5s ease infinite; }
+.card[data-shake="2"] { animation: shake2 0.45s ease infinite; }
+.card[data-shake="3"] { animation: shake3 0.4s ease infinite; }
+.card[data-shake="4"] { animation: shake4 0.35s ease infinite; }
+.card[data-shake="5"] { animation: shake5 0.28s ease infinite; }
+
+@keyframes shake1 {
+  0%,100% { transform: translateX(0); }
+  25%     { transform: translateX(-5px)  rotate(-0.5deg); }
+  75%     { transform: translateX(5px)   rotate(0.5deg); }
+}
+@keyframes shake2 {
+  0%,100% { transform: translateX(0); }
+  25%     { transform: translateX(-10px) rotate(-1deg); }
+  75%     { transform: translateX(10px)  rotate(1deg); }
+}
+@keyframes shake3 {
+  0%,100% { transform: translateX(0); }
+  20%     { transform: translateX(-14px) rotate(-1.5deg) translateY(-2px); }
+  50%     { transform: translateX(14px)  rotate(1.5deg)  translateY(2px); }
+  80%     { transform: translateX(-8px)  rotate(-1deg); }
+}
+@keyframes shake4 {
+  0%,100% { transform: translateX(0); }
+  15%     { transform: translateX(-20px) rotate(-2deg) translateY(-4px); }
+  40%     { transform: translateX(20px)  rotate(2deg)  translateY(4px); }
+  65%     { transform: translateX(-14px) rotate(-1.5deg); }
+  85%     { transform: translateX(14px)  rotate(1.5deg); }
+}
+@keyframes shake5 {
+  0%,100% { transform: translateX(0) translateY(0); }
+  10%     { transform: translateX(-26px) translateY(-6px)  rotate(-3deg); }
+  30%     { transform: translateX(26px)  translateY(6px)   rotate(3deg); }
+  50%     { transform: translateX(-20px) translateY(-4px)  rotate(-2deg); }
+  70%     { transform: translateX(20px)  translateY(4px)   rotate(2deg); }
+  90%     { transform: translateX(-10px) translateY(-2px); }
+}
+
+/* transition shake (single hit) */
+.card.shake-hit {
+  animation: shakeHit 0.45s ease both !important;
+}
+@keyframes shakeHit {
+  0%,100% { transform: translateX(0); }
+  20%     { transform: translateX(-9px)  rotate(-1.2deg); }
+  40%     { transform: translateX(9px)   rotate(1.2deg); }
+  60%     { transform: translateX(-6px); }
+  80%     { transform: translateX(6px); }
+}
+
+/* ─── EMOJI ─── */
+.emoji-top {
+  font-size: 3.5rem;
+  margin-bottom: 8px;
+  display: block;
+  animation: wiggle 2s ease-in-out infinite;
+}
+
+@keyframes wiggle {
+  0%,100% { transform: rotate(-5deg) scale(1); }
+  50%      { transform: rotate(5deg)  scale(1.12); }
+}
+
+/* ─── QUESTION ─── */
+.question {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 22px;
+  line-height: 1.35;
+  min-height: 2.6rem;
+  transition: opacity 0.3s ease;
+}
+
+/* ─── GIF WRAPPER ─── */
+.gif-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 26px;
+  height: var(--gif-height);
+  align-items: center;
+  overflow: hidden;
+}
+
+.gif {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 18px;
+  transition: opacity 0.3s ease;
+  filter: drop-shadow(0 8px 20px rgba(233,30,99,0.2));
+}
+
+/* ─── BUTTONS ─── */
+.btn-group {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  position: relative;
+  min-height: 56px;
+  align-items: center;
+}
+
+button {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  letter-spacing: 0.3px;
+  padding: 13px 30px;
+  font-size: 1rem;
+}
+
+.yes-btn {
+  background: linear-gradient(135deg, #ff6b9d, #e91e63);
+  color: white;
+  box-shadow: 0 6px 20px rgba(233, 30, 99, 0.45);
+  transition: transform 0.2s ease, box-shadow 0.2s ease,
+              font-size 0.4s cubic-bezier(0.34,1.56,0.64,1),
+              padding 0.4s ease;
+  z-index: 20;
+}
+
+.yes-btn:hover {
+  transform: scale(1.07) translateY(-2px);
+  box-shadow: 0 10px 28px rgba(233, 30, 99, 0.55);
+}
+
+.no-btn {
+  background: rgba(255,255,255,0.92);
+  color: #aaa;
+  border: 2px solid #eee;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  transition: background 0.2s ease, left 0.08s ease, top 0.08s ease;
+  z-index: 20;
+}
+
+/* drama mode: no btn goes fixed */
+.no-btn.drama {
+  position: fixed;
+  transition: none;
+}
+
+.no-btn:hover { background: rgba(255,255,255,0.98); }
+
+/* ─── APOLOGY BUTTON ─── */
+.okay-btn {
+  background: linear-gradient(135deg, #ff6b9d, #c2185b);
+  color: white;
+  padding: 15px 40px;
+  font-size: 1.15rem;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  box-shadow: 0 8px 24px rgba(194,24,91,0.45);
+  margin-top: 8px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  animation: pulseGrow 1.6s ease-in-out infinite;
+}
+
+.okay-btn:hover {
+  transform: scale(1.08) translateY(-2px);
+  box-shadow: 0 12px 32px rgba(194,24,91,0.55);
+}
+
+/* ─── FADE SWAP ─── */
+.fade-in {
+  animation: fadeIn 0.4s ease both;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.96) translateY(6px); }
+  to   { opacity: 1; transform: scale(1)    translateY(0); }
+}
+
+/* ─── PULSE YES ─── */
+.pulse-yes {
+  animation: pulseGrow 0.55s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+
+@keyframes pulseGrow {
+  from { transform: scale(1);    }
+  50%  { transform: scale(1.18); }
+  to   { transform: scale(1);    }
+}
+
+/* ─── CELEBRATE ─── */
+.celebrate .card {
+  background: rgba(255, 240, 248, 0.92);
+  border-color: rgba(255, 100, 150, 0.6);
+  animation: celebrateCard 0.6s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+
+@keyframes celebrateCard {
+  0%   { transform: scale(0.85); }
+  100% { transform: scale(1.02); }
+}
+
+/* ─── FINALE SCREEN ─── */
+.finale-emoji {
+  font-size: 4rem;
+  margin-bottom: 6px;
+  display: block;
+  animation: heartbeat 0.75s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+  0%,100% { transform: scale(1);    }
+  50%      { transform: scale(1.28); }
+}
+
+.finale-msg {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  color: #c2185b;
+  font-size: 1.15rem;
+  margin-top: 10px;
+  line-height: 1.6;
+  opacity: 0;
+  animation: fadeIn 0.8s ease 0.5s forwards;
+}
+
+/* ─── PULSING BG ON CELEBRATE ─── */
+body.celebrate {
+  animation: bgPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes bgPulse {
+  0%,100% { background: linear-gradient(135deg, #ffe4ef 0%, #ffd6e8 40%, #ffb3cc 100%); }
+  50%      { background: linear-gradient(135deg, #ffb3d1 0%, #ff8fb3 40%, #ff6699 100%); }
+}
+
+/* ════════════════════════════════════════
+   RESPONSIVE — Galaxy J7  (~360 × 640px)
+   ════════════════════════════════════════ */
+@media (max-width: 400px) {
+  :root { --gif-height: 155px; }
+
+  .card {
+    padding: 24px 20px 30px;
+    border-radius: 24px;
+    width: 94vw;
+  }
+
+  .emoji-top { font-size: 2.6rem; }
+
+  .question {
+    font-size: 1.25rem;
+    margin-bottom: 14px;
+    min-height: 2rem;
+  }
+
+  .gif-wrapper { margin-bottom: 18px; }
+
+  button { padding: 11px 22px; font-size: 0.88rem; }
+
+  .btn-group { gap: 12px; min-height: 48px; }
+
+  /* No-button jump distance on J7: max 70px */
+  .no-btn.drama { transition: none; }
+
+  @keyframes shake3 {
+    0%,100% { transform: translateX(0); }
+    20%     { transform: translateX(-10px) rotate(-1deg) translateY(-2px); }
+    50%     { transform: translateX(10px)  rotate(1deg)  translateY(2px); }
+    80%     { transform: translateX(-6px)  rotate(-0.8deg); }
+  }
+  @keyframes shake4 {
+    0%,100% { transform: translateX(0); }
+    15%     { transform: translateX(-14px) rotate(-1.5deg) translateY(-3px); }
+    40%     { transform: translateX(14px)  rotate(1.5deg)  translateY(3px); }
+    65%     { transform: translateX(-10px) rotate(-1deg); }
+    85%     { transform: translateX(10px)  rotate(1deg); }
+  }
+  @keyframes shake5 {
+    0%,100% { transform: translateX(0)    translateY(0); }
+    10%     { transform: translateX(-18px) translateY(-4px)  rotate(-2.5deg); }
+    30%     { transform: translateX(18px)  translateY(4px)   rotate(2.5deg); }
+    50%     { transform: translateX(-14px) translateY(-3px)  rotate(-2deg); }
+    70%     { transform: translateX(14px)  translateY(3px)   rotate(2deg); }
+    90%     { transform: translateX(-8px)  translateY(-2px); }
+  }
+}
+
+/* ════════════════════════════════════════
+   RESPONSIVE — 1920 × 1080 laptop
+   ════════════════════════════════════════ */
+@media (min-width: 1400px) {
+  :root { --gif-height: 310px; }
+
+  .card {
+    max-width: 560px;
+    padding: 48px 58px 56px;
+    border-radius: 38px;
+  }
+
+  .emoji-top { font-size: 4.2rem; }
+
+  .question {
+    font-size: 2.2rem;
+    margin-bottom: 28px;
+    min-height: 3rem;
+  }
+
+  .gif-wrapper { margin-bottom: 32px; }
+
+  button { padding: 16px 38px; font-size: 1.15rem; }
+
+  .btn-group { gap: 24px; }
+
+  /* Bigger shakes on large screen */
+  @keyframes shake3 {
+    0%,100% { transform: translateX(0); }
+    20%     { transform: translateX(-18px) rotate(-1.8deg) translateY(-3px); }
+    50%     { transform: translateX(18px)  rotate(1.8deg)  translateY(3px); }
+    80%     { transform: translateX(-10px) rotate(-1deg); }
+  }
+  @keyframes shake4 {
+    0%,100% { transform: translateX(0); }
+    15%     { transform: translateX(-26px) rotate(-2.5deg) translateY(-5px); }
+    40%     { transform: translateX(26px)  rotate(2.5deg)  translateY(5px); }
+    65%     { transform: translateX(-18px) rotate(-1.8deg); }
+    85%     { transform: translateX(18px)  rotate(1.8deg); }
+  }
+  @keyframes shake5 {
+    0%,100% { transform: translateX(0)    translateY(0); }
+    10%     { transform: translateX(-36px) translateY(-8px)  rotate(-4deg); }
+    30%     { transform: translateX(36px)  translateY(8px)   rotate(4deg); }
+    50%     { transform: translateX(-28px) translateY(-6px)  rotate(-3deg); }
+    70%     { transform: translateX(28px)  translateY(6px)   rotate(3deg); }
+    90%     { transform: translateX(-14px) translateY(-3px); }
+  }
+}

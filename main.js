@@ -16,42 +16,42 @@ const SCREENS = [
   {
     emoji:   "🥺",
     text:    "Suna na",
-    gifSrc:  "images/cute.gif",
+    gifSrc:  "cute.gif",
     yesText: "Bol naa 💬",
     noText:  "No 🙅",
   },
   {
     emoji:   "😔",
     text:    "Pleasee Pleasee Pleaseee im sorry",
-    gifSrc:  "images/sorry.png",
+    gifSrc:  "sorry.png",
     yesText: "La la k vo ?",
     noText:  "Naii ma sundai sundina",
   },
   {
     emoji:   "😭",
     text:    "I I did not mean what i said or made seem i swearrr i swearrr",
-    gifSrc:  "images/download.gif",
+    gifSrc:  "download.gif",
     yesText: "😑 Lala",
     noText:  "Baal ho TwT",
   },
   {
     emoji:   "🙏",
     text:    "Pleaseee pleaseeeeeeeeeee pleaseeeeeeeeee pleeeasseeeeeeeeee 😭😭",
-    gifSrc:  "images/sadlife.gif",
+    gifSrc:  "sadlife.gif",
     yesText: "😑 Ok but not ok",
     noText:  "No means NOO",
   },
   {
     emoji:   "💔",
     text:    "Yaaar pleaaseee. I beg youu 😭 i i cant, you know i did not mean to say/do that right im sorry 😭😭",
-    gifSrc:  "images/run.gif",
+    gifSrc:  "run.gif",
     yesText: "......... Lala",
     noText:  "Nope. Nahi. Never.",
   },
   {
     emoji:   "😭😭",
     text:    "Cosmica I I beg youu 😭 pleaseee 😭😭, i might be annoying atp TwT <br> (tell me if i am creeping 😭)",
-    gifSrc:  "images/run.gif",
+    gifSrc:  "run.gif",
     yesText: "Hyaaaaaaa lala 😑",
     noText:  "vaad ma jau timi ",
   },
@@ -232,7 +232,7 @@ function showApologyScreen() {
   setTimeout(() => {
     emojiTop.textContent = "😭";
     question.innerHTML   = `😭 I'm genuinely sorry Cosmicaa 😭<br>dont risaying naa Please 😭`;
-    gif.src              = "images/sorry.png";
+    gif.src              = "sorry.png";
 
     question.style.opacity = "1";
     gif.style.opacity      = "1";
@@ -288,7 +288,7 @@ function showFinale() {
     question.style.fontSize = isMobile() ? "2rem" : "2.6rem";
     question.classList.add("fade-in");
 
-    gif.src = "images/love.gif";
+    gif.src = "love.gif";
     gif.style.opacity = "1";
     gif.classList.add("fade-in");
 
